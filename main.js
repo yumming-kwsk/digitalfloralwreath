@@ -29,20 +29,10 @@ function windowResized() {
 }
 
 function scaleCanvas() {
-  // スケール計算（画面幅基準）
-  let scaleFactor = windowWidth / baseW;
-  let displayW = baseW * scaleFactor;
-  let displayH = baseH * scaleFactor;
-
-  // 横幅は画面いっぱい
-  cnv.style('width', displayW + 'px');
-  cnv.style('height', displayH + 'px');
-
-  // キャンバスを下に揃える
-  cnv.style('position', 'absolute');
-  cnv.style('left', '50%');
-  cnv.style('transform', 'translateX(-50%)');
-  cnv.style('bottom', '0');
+  // 画面の幅か高さの小さい方に合わせてスケーリング
+  let scaleFactor = min(windowWidth / baseW, windowHeight / baseH);
+  cnv.style('width', baseW * scaleFactor + 'px');
+  cnv.style('height', baseH * scaleFactor + 'px');
 }
 
 function draw(){
