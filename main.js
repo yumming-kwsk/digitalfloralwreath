@@ -111,11 +111,11 @@ function draw(){
 }
 
 function mousePressed() {
-  ringFireworks.push(new RingFirework(mouseX-width/2, mouseY-height/3.2));
+  ringFireworks.push(new RingFirework(mouseX-width/2, mouseY-height/2.3));
 }
 
 function touchStarted() {
-  ringFireworks.push(new RingFirework(mouseX-width/2, mouseY-height/3.2));
+  ringFireworks.push(new RingFirework(mouseX-width/2, mouseY-height/2.3));
 }
 
 
