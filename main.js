@@ -1,4 +1,4 @@
-let baseW = 600;
+let baseW = 1200;
 let baseH = 700; // 花輪がきれいに収まる比率に設定
 let cnv;
 
