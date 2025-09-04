@@ -1,7 +1,3 @@
-let baseW = 1200;
-let baseH = 700; // 花輪がきれいに収まる比率に設定
-let cnv;
-
 let palette = [
   '#27D4FF',//水色(BG)
   '#FF00BB',//ピンク
@@ -17,22 +13,10 @@ let mv;
 let ringFireworks = [];
 
 function setup() {
-  cnv = createCanvas(baseW, baseH);
-  angleMode(DEGREES);
+  createCanvas(windowWidth, windowHeight);
+  angleMode(DEGREES);  // 度数法を使う
   textFont("DotGothic16");
   textAlign(CENTER, CENTER);
-  scaleCanvas();
-}
-
-function windowResized() {
-  scaleCanvas();
-}
-
-function scaleCanvas() {
-  // 画面の幅か高さの小さい方に合わせてスケーリング
-  let scaleFactor = min(windowWidth / baseW, windowHeight / baseH);
-  cnv.style('width', baseW * scaleFactor + 'px');
-  cnv.style('height', baseH * scaleFactor + 'px');
 }
 
 function draw(){
