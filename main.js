@@ -168,7 +168,7 @@ function drawName(x,y){
   textSize(42);
   fill(palette[5]);
   text('p5 js', 0, -80);
-  drawFlower(2,-78,5);
+  drawFlower(2,-68,5);
   textSize(22);
   text('これからもよろしく\nおねがいします💓', 0, 80);
   fill(palette[1]);
