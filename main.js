@@ -48,7 +48,7 @@ function draw(){
   fill(palette[0]);
   rect(0,0,width,height);
   pop();
-  translate(width / 2, height / 3.2);
+  translate(width / 2, height / 2.3);
 
   mv = map(sin(angle*2),-1,1,-5,2);
 
