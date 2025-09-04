@@ -1,21 +1,10 @@
-
-/* ================ ↓ここを変更↓ ================ */
-
-let toName = "お祝いしたい人"; // // 相手の名前
-let fromName = "友人一同"; // 贈り主
-let messages = ["結婚", "おめでとう！", "末長くお幸せに"]; // メッセージ（順番に切り替わります）
-
-
-
-/* ============== ここ下は触らない！ =============== */
-
 let palette = [
   '#27D4FF',//水色(BG)
   '#FF00BB',//ピンク
-  '#FF401F',//レッド
+  '#FF401F',//RED
   '#EAFF2B',//イエロー
   '#17D527',//グリーン
-  '#006FFF'//ブルー
+  '#006FFF'//BLUE
 ];
 
 let angle = 0;
@@ -24,8 +13,8 @@ let mv;
 let ringFireworks = [];
 
 function setup() {
-  createCanvas(1280, 720);
-  angleMode(DEGREES);
+  createCanvas(windowWidth, windowHeight);
+  angleMode(DEGREES);  // 度数法を使う
   textFont("DotGothic16");
   textAlign(CENTER, CENTER);
 }
@@ -43,12 +32,15 @@ function draw(){
   line(0,0,-180,height);
 
   //name
-  drawName(0,height / 2.6);
+  drawName(0,height / 2.4);
+
 
   //hanawa 
   noStroke();
+
   drawRing(0,0,20,70,75,3,drawCircle);
   drawRing(0,0,48,146,24,1,drawCircle);
+  // drawRing(0,0,80,152,16,1,drawCircle);
   push();
   rotate(-angle*0.1);
   drawRing(0,0,40,138,24,3,drawCircle);
@@ -81,6 +73,7 @@ function draw(){
   textSize(64);
   text('祝', 0, 0);
 
+
   // 花火の表示・更新
   for (let i = ringFireworks.length - 1; i >= 0; i--) {
     ringFireworks[i].update();
@@ -98,6 +91,8 @@ function mousePressed() {
 function touchStarted() {
   ringFireworks.push(new RingFirework(mouseX-width/2, mouseY-height/3.2));
 }
+
+
 
 function drawRing(x, y, num, r, s, col, drawFunc) {
   push();
@@ -136,46 +131,29 @@ function drawFlower(x, y, s) {
   pop();
 }
 
-
 function drawName(x,y){
   push();
   translate(x,y);
   rectMode(CENTER);
   fill(palette[3]);
   stroke(palette[2]);
-  rect(0,0,260,280);
+  rect(0,0,260,260);
   noStroke();
-
-  // 名前や送り主のテキストを自動サイズ化
-  let maxWidth = 100; // この枠内に収めたい幅
-  textSize(fitTextSize('さん江', maxWidth, 30, 12));
-  fill(palette[2]);
-  text('さん江', 70, -50);
-
-  textSize(fitTextSize('より', maxWidth, 30, 12));
-  text('より', 80, 115);
-
-  // メインの名前と送り主
-  textSize(fitTextSize(toName, 200, 38, 18));
+  textSize(42);
   fill(palette[5]);
-  text(toName, 0, -85);
-
-  textSize(fitTextSize(fromName, 200, 38, 18));
-  text(fromName, 0, 78);
-
-  // メッセージ部分
+  text('p5 js', 0, -80);
+  drawFlower(2,-78,5);
+  textSize(22);
+  text('これからもよろしく\nおねがいします💓', 0, 80);
   fill(palette[1]);
-  let interval = 60; // 60フレームで1秒
-  let index = floor(frameCount / interval) % messages.length;
-  let msg = messages[index];
-
-  let fitted = fitTextSize(msg, 200, 80, 18);
-  textSize(fitted);
-  text(msg, 0, 10);
+  let interval = 60; // 60フレームで1秒（= 2秒ごとなら120に）
+  let texts = ['一周年', 'ありがとう','感謝'];
+  let sizes = [72,46,78];
+  let index = floor(frameCount / interval) % texts.length;
+  textSize(sizes[index]);
+  text(texts[index], 0, -5);
   pop();
 }
-
-
 
 class RingFirework {
   constructor(x, y) {
@@ -218,27 +196,4 @@ class RingFirework {
   isDead() {
     return this.life <= 0;
   }
-}
-
-// 文字列がmaxWidthに収まる最大フォントサイズを返す
-// 使い回しのために結果をキャッシュ
-const __textSizeCache = {};
-function fitTextSize(str, maxWidth, maxSize = 80, minSize = 18) {
-  const key = `${str}|${maxWidth}|${maxSize}|${minSize}`;
-  if (__textSizeCache[key]) return __textSizeCache[key];
-
-  let lo = minSize, hi = maxSize, best = minSize;
-  while (lo <= hi) {
-    const mid = Math.floor((lo + hi) / 2);
-    textSize(mid);
-   
-    if (textWidth(str) <= maxWidth) {
-      best = mid;
-      lo = mid + 1;
-    } else {
-      hi = mid - 1;
-    }
-  }
-  __textSizeCache[key] = best;
-  return best;
 }
