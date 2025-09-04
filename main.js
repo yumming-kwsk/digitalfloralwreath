@@ -12,15 +12,42 @@ let mv;
 
 let ringFireworks = [];
 
+let baseW = 600;
+let baseH = 800; // 花輪がきれいに収まる比率に設定
+let cnv;
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  angleMode(DEGREES);  // 度数法を使う
+  cnv = createCanvas(baseW, baseH);
+  angleMode(DEGREES);
   textFont("DotGothic16");
   textAlign(CENTER, CENTER);
+  scaleCanvas();
 }
+
+function windowResized() {
+  scaleCanvas();
+}
+
+function scaleCanvas() {
+  // 画面の幅か高さの小さい方に合わせてスケーリング
+  let scaleFactor = min(windowWidth / baseW, windowHeight / baseH);
+  cnv.style('width', baseW * scaleFactor + 'px');
+  cnv.style('height', baseH * scaleFactor + 'px');
+
+   // キャンバスを下に揃える
+   cnv.style('position', 'absolute');
+   cnv.style('left', '50%');
+   cnv.style('transform', 'translateX(-50%)');
+   cnv.style('bottom', '0');
+}
+
 
 function draw(){
   background(palette[0]);
+  push();
+  fill(palette[0]);
+  rect(0,0,width,height);
+  pop();
   translate(width / 2, height / 3.2);
 
   mv = map(sin(angle*2),-1,1,-5,2);
@@ -32,7 +59,7 @@ function draw(){
   line(0,0,-180,height);
 
   //name
-  drawName(0,height / 2.4);
+  drawName(0,height / 3);
 
 
   //hanawa 
@@ -72,7 +99,6 @@ function draw(){
   fill(palette[2]);
   textSize(64);
   text('祝', 0, 0);
-
 
   // 花火の表示・更新
   for (let i = ringFireworks.length - 1; i >= 0; i--) {
